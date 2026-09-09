@@ -7,9 +7,9 @@
 ## Description
 Full-stack application with a separate backend built in Nest.Js API with MySQL and Docker, and a frontend developed in Next.js, TypeScript, and Tailwind CSS. Application designed for collectors of physical games released on playstation consoles.
 
-## Installation & Run
+## Running the Application
+To be updated ...
 
-To be updated..
 
 
 
