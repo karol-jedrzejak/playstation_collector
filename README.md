@@ -17,7 +17,7 @@ Before launching the project, make sure you have installed:
 To launch the application, run the command in the terminal.:
 
 ```bash
-npm run dev
+npm run start
 ```
 
 
