@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node ./scripts/dev.js",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:restart": "docker compose restart",
-    "docker:logs": "docker compose logs -f"
+    "start": "docker compose up",
+    "build": "docker compose up --build",
+    "dev:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "backend": "docker exec -it playstation-backend",
+    "frontend": "docker exec -it playstation-frontend",
+    "prisma:migrate": "docker exec -it playstation-backend npx prisma migrate dev"
   }
 }

@@ -11,7 +11,6 @@ Full-stack application with a separate backend built in Nest.Js API with MySQL a
 
 ### Prerequisites
 Before launching the project, make sure you have installed:
-* **Node.js**
 * **Docker** (and the Docker Desktop service / daemon running)
 
 ### Startup
