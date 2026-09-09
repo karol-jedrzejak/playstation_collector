@@ -1,0 +1,12 @@
+{
+  "name": "playstation-collector",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./scripts/dev.js",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:restart": "docker compose restart",
+    "docker:logs": "docker compose logs -f"
+  }
+}
