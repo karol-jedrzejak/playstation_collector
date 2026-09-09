@@ -7,8 +7,21 @@
 ## Description
 Full-stack application with a separate backend built in Nest.Js API with MySQL and Docker, and a frontend developed in Next.js, TypeScript, and Tailwind CSS. Application designed for collectors of physical games released on playstation consoles.
 
-## Running the Application
-To be updated ...
+## Running the application
+
+### Prerequisites
+Before launching the project, make sure you have installed:
+* **Node.js**
+* **Docker** (and the Docker Desktop service / daemon running)
+
+### Startup
+To launch the application, run the command in the terminal.:
+
+```bash
+npm run dev
+```
+
+
 
 
 
