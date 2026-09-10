@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "start": "docker compose up",
-    "build": "docker compose up --build",
-    "dev:down": "docker compose down",
-    "docker:logs": "docker compose logs -f",
+    "build:windows": "if not exist .env copy .env.example .env && docker compose up --build",
+    "build:other": "([ -f .env ] || cp .env.example .env) && docker compose up --build",
+    "setup": "docker exec -it playstation-backend npx prisma migrate reset && docker exec -it playstation-backend npx prisma migrate dev --name init",
     "backend": "docker exec -it playstation-backend",
     "frontend": "docker exec -it playstation-frontend",
-    "prisma:migrate": "docker exec -it playstation-backend npx prisma migrate dev"
+    "prisma:generate": "docker exec -it playstation-backend npx prisma generate",
+    "prisma:migrate": "docker exec -it playstation-backend npx prisma migrate dev",
+    "prisma:db-push": "docker exec -it playstation-backend npx prisma db push"
   }
 }
