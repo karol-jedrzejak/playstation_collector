@@ -9,6 +9,69 @@
 * 🟢 You can import this file directly.
 */
 
+export const RegionalStandard = {
+  PAL: 'PAL',
+  NTSC_U: 'NTSC_U',
+  NTSC_J: 'NTSC_J'
+} as const
+
+export type RegionalStandard = (typeof RegionalStandard)[keyof typeof RegionalStandard]
+
+
+export const GameStyle = {
+  WESTERN: 'WESTERN',
+  JAPANESE: 'JAPANESE',
+  MIXED: 'MIXED'
+} as const
+
+export type GameStyle = (typeof GameStyle)[keyof typeof GameStyle]
+
+
+export const ReleaseType = {
+  ORIGINAL: 'ORIGINAL',
+  PLATINUM: 'PLATINUM',
+  GREATEST_HITS: 'GREATEST_HITS',
+  ESSENTIALS: 'ESSENTIALS',
+  CLASSICS: 'CLASSICS',
+  PLAYSTATION_HITS: 'PLAYSTATION_HITS',
+  LIMITED_EDITION: 'LIMITED_EDITION',
+  COLLECTORS_EDITION: 'COLLECTORS_EDITION',
+  BUNDLE: 'BUNDLE',
+  REPRINT: 'REPRINT',
+  OTHER: 'OTHER'
+} as const
+
+export type ReleaseType = (typeof ReleaseType)[keyof typeof ReleaseType]
+
+
+export const DiscType = {
+  CD: 'CD',
+  DVD: 'DVD',
+  BLU_RAY: 'BLU_RAY',
+  ULTRA_HD_BLU_RAY: 'ULTRA_HD_BLU_RAY',
+  UMD: 'UMD',
+  CARTRIDGE: 'CARTRIDGE'
+} as const
+
+export type DiscType = (typeof DiscType)[keyof typeof DiscType]
+
+
+export const ReleaseAccessoryType = {
+  SUPPORTED: 'SUPPORTED',
+  REQUIRED: 'REQUIRED'
+} as const
+
+export type ReleaseAccessoryType = (typeof ReleaseAccessoryType)[keyof typeof ReleaseAccessoryType]
+
+
+export const ReleaseLanguageType = {
+  BOX: 'BOX',
+  GAME: 'GAME'
+} as const
+
+export type ReleaseLanguageType = (typeof ReleaseLanguageType)[keyof typeof ReleaseLanguageType]
+
+
 export const UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN'

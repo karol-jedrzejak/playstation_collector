@@ -1,0 +1,17 @@
+// =====================================================
+// GENRES
+// =====================================================
+
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  description String? @db.Text
+
+  games GameGenre[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("genres")
+}

@@ -1,0 +1,226 @@
+// =====================================================
+// GAMES
+// =====================================================
+
+model Game {
+  id Int @id @default(autoincrement())
+
+  officialName String
+  commonName   String?
+
+  consoleId String
+  console   Console @relation(fields: [consoleId], references: [id])
+
+  description String? @db.Text
+
+  developers GameDeveloper[]
+  publishers GamePublisher[]
+
+  style GameStyle?
+
+  genres   GameGenre[]
+  releases GameRelease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([consoleId])
+  @@index([officialName])
+  @@index([commonName])
+  @@index([style])
+  @@map("games")
+}
+
+model GameGenre {
+  gameId  Int
+  genreId Int
+
+  game  Game  @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([gameId, genreId])
+  @@index([genreId])
+  @@map("game_genres")
+}
+
+// =====================================================
+// GAME RELEASE
+// =====================================================
+
+model GameRelease {
+  id Int @id @default(autoincrement())
+
+  gameId Int
+  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  releaseDate DateTime?
+
+  regionId Int?
+  region   Region? @relation(fields: [regionId], references: [id])
+
+  regionCodeId Int?
+  regionCode   RegionCode? @relation(fields: [regionCodeId], references: [id])
+
+  regionalStandard RegionalStandard?
+
+  edition ReleaseType @default(ORIGINAL)
+
+  serialNumber String?
+  barcode      String?
+
+  boxType String?
+
+  description String? @db.Text
+
+  // ===================================================
+  // LANGUAGES
+  // ===================================================
+
+  languages ReleaseLanguage[]
+
+  // ===================================================
+  // PLAYERS
+  // ===================================================
+
+  minLocalPlayers Int?
+  maxLocalPlayers Int?
+
+  minOnlinePlayers Int?
+  maxOnlinePlayers Int?
+
+  hasCoop Boolean @default(false)
+
+  // ===================================================
+  // ACCESSORIES
+  // ===================================================
+
+  accessories ReleaseAccessory[]
+
+  // ===================================================
+  // MEDIA
+  // ===================================================
+
+  mediaType  DiscType?
+  mediaCount Int       @default(1)
+
+  discs ReleaseDisc[]
+
+  // ===================================================
+  // FEATURES
+  // ===================================================
+
+  supportsVibration Boolean?
+
+  ageRating Int?
+
+  // ===================================================
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([gameId])
+  @@index([regionId])
+  @@index([regionCodeId])
+  @@index([regionalStandard])
+  @@index([edition])
+  @@index([releaseDate])
+  @@index([hasCoop])
+  @@index([minLocalPlayers])
+  @@index([minOnlinePlayers])
+  @@index([maxLocalPlayers])
+  @@index([maxOnlinePlayers])
+  @@map("game_releases")
+}
+
+// =====================================================
+// RELEASE MEDIA
+// =====================================================
+
+model ReleaseDisc {
+  id Int @id @default(autoincrement())
+
+  releaseId Int
+  release   GameRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+
+  discNumber Int
+
+  // np. "Disc 1", "Disc 2", "UMD", "Cartridge"
+  label String?
+
+  serialNumber String?
+
+  mediaType DiscType?
+
+  @@unique([releaseId, discNumber])
+  @@index([serialNumber])
+  @@map("release_discs")
+}
+
+// =====================================================
+// RELEASE ↔ ACCESSORY
+// =====================================================
+
+model ReleaseAccessory {
+  releaseId   Int
+  accessoryId Int
+
+  type ReleaseAccessoryType
+
+  release   GameRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  accessory Accessory   @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
+
+  @@id([releaseId, accessoryId])
+  @@index([accessoryId])
+  @@index([type])
+  @@map("release_accessories")
+}
+
+// =====================================================
+// DEVELOPER + PUBLISHER
+// =====================================================
+
+model GameDeveloper {
+  gameId    Int
+  companyId Int
+
+  game    Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([gameId, companyId])
+  @@index([companyId])
+  @@map("game_developers")
+}
+
+model GamePublisher {
+  gameId    Int
+  companyId Int
+
+  game    Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@id([gameId, companyId])
+  @@index([companyId])
+  @@map("game_publishers")
+}
+
+// =====================================================
+// RELEASE LANGUAGE
+// =====================================================
+
+enum ReleaseLanguageType {
+  BOX
+  GAME
+}
+
+model ReleaseLanguage {
+  releaseId  Int
+  languageId Int
+  type       ReleaseLanguageType
+
+  release  GameRelease @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  language Language    @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@id([releaseId, languageId, type])
+  @@index([languageId])
+  @@map("release_languages")
+}

@@ -1,0 +1,43 @@
+// =====================================================
+// ENUMS
+// =====================================================
+
+enum RegionalStandard {
+  PAL
+  NTSC_U
+  NTSC_J
+}
+
+enum GameStyle {
+  WESTERN
+  JAPANESE
+  MIXED
+}
+
+enum ReleaseType {
+  ORIGINAL
+  PLATINUM
+  GREATEST_HITS
+  ESSENTIALS
+  CLASSICS
+  PLAYSTATION_HITS
+  LIMITED_EDITION
+  COLLECTORS_EDITION
+  BUNDLE
+  REPRINT
+  OTHER
+}
+
+enum DiscType {
+  CD
+  DVD
+  BLU_RAY
+  ULTRA_HD_BLU_RAY
+  UMD
+  CARTRIDGE
+}
+
+enum ReleaseAccessoryType {
+  SUPPORTED
+  REQUIRED
+}

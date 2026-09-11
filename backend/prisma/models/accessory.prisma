@@ -1,0 +1,27 @@
+// =====================================================
+// ACCESSORIES
+// =====================================================
+
+model Accessory {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  description String? @db.Text
+
+  consoleId String
+  console   Console @relation(fields: [consoleId], references: [id])
+
+  regionalStandard RegionalStandard?
+
+  // np. "Multitap", "GunCon", "PS VR", "Light Gun"
+  type String?
+
+  releases ReleaseAccessory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([consoleId])
+  @@index([regionalStandard])
+  @@map("accessories")
+}

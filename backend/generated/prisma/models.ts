@@ -8,5 +8,21 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Accessory.js'
+export type * from './models/Company.js'
+export type * from './models/Console.js'
+export type * from './models/ConsoleModel.js'
+export type * from './models/Game.js'
+export type * from './models/GameGenre.js'
+export type * from './models/GameRelease.js'
+export type * from './models/ReleaseDisc.js'
+export type * from './models/ReleaseAccessory.js'
+export type * from './models/GameDeveloper.js'
+export type * from './models/GamePublisher.js'
+export type * from './models/ReleaseLanguage.js'
+export type * from './models/Genre.js'
+export type * from './models/Language.js'
+export type * from './models/Region.js'
+export type * from './models/RegionCode.js'
 export type * from './models/User.js'
 export type * from './commonInputTypes.js'

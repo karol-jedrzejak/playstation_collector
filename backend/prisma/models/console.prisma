@@ -1,0 +1,59 @@
+// =====================================================
+// CONSOLE
+// =====================================================
+
+model Console {
+  id          String  @id
+  name        String
+  description String? @db.Text
+
+  regionCodes              RegionCode[]
+  models                   ConsoleModel[]
+  games                    Game[]
+  accessories              Accessory[]
+  backwardCompatibleModels ConsoleModel[] @relation("BackwardCompatibility")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("consoles")
+}
+
+// =====================================================
+// CONSOLE MODEL
+// =====================================================
+
+model ConsoleModel {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  description  String? @db.Text
+  serialNumber String?
+
+  consoleId String
+  console   Console @relation(fields: [consoleId], references: [id])
+
+  regionalStandard RegionalStandard?
+  releaseDate      DateTime?
+
+  // np. "Blu-ray", "UMD", "Cartridge"
+  gameMedia String?
+
+  processor String? @db.Text
+  ram       String?
+  storage   String?
+
+  // np. "Full", "Partial", "None"
+  backwardCompatibility String?
+
+  backwardCompatibleWith Console[] @relation("BackwardCompatibility")
+
+  availableColors String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([consoleId])
+  @@index([regionalStandard])
+  @@map("console_models")
+}

@@ -1,0 +1,38 @@
+// =====================================================
+// REGION
+// =====================================================
+
+model Region {
+  id   Int    @id @default(autoincrement())
+  code String @unique
+  name String
+
+  regionCodes RegionCode[]
+  releases    GameRelease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@map("regions")
+}
+
+model RegionCode {
+  id Int @id @default(autoincrement())
+
+  consoleId String
+  console   Console @relation(fields: [consoleId], references: [id])
+
+  code String
+
+  regions  Region[]
+  releases GameRelease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([consoleId, code])
+  @@index([consoleId])
+  @@index([code])
+  @@map("region_codes")
+}

@@ -51,6 +51,22 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Accessory: 'Accessory',
+  Company: 'Company',
+  Console: 'Console',
+  ConsoleModel: 'ConsoleModel',
+  Game: 'Game',
+  GameGenre: 'GameGenre',
+  GameRelease: 'GameRelease',
+  ReleaseDisc: 'ReleaseDisc',
+  ReleaseAccessory: 'ReleaseAccessory',
+  GameDeveloper: 'GameDeveloper',
+  GamePublisher: 'GamePublisher',
+  ReleaseLanguage: 'ReleaseLanguage',
+  Genre: 'Genre',
+  Language: 'Language',
+  Region: 'Region',
+  RegionCode: 'RegionCode',
   User: 'User'
 } as const
 
@@ -68,6 +84,205 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const AccessoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  consoleId: 'consoleId',
+  regionalStandard: 'regionalStandard',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccessoryScalarFieldEnum = (typeof AccessoryScalarFieldEnum)[keyof typeof AccessoryScalarFieldEnum]
+
+
+export const CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  wikipediaUrl: 'wikipediaUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+export const ConsoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsoleScalarFieldEnum = (typeof ConsoleScalarFieldEnum)[keyof typeof ConsoleScalarFieldEnum]
+
+
+export const ConsoleModelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  serialNumber: 'serialNumber',
+  consoleId: 'consoleId',
+  regionalStandard: 'regionalStandard',
+  releaseDate: 'releaseDate',
+  gameMedia: 'gameMedia',
+  processor: 'processor',
+  ram: 'ram',
+  storage: 'storage',
+  backwardCompatibility: 'backwardCompatibility',
+  availableColors: 'availableColors',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsoleModelScalarFieldEnum = (typeof ConsoleModelScalarFieldEnum)[keyof typeof ConsoleModelScalarFieldEnum]
+
+
+export const GameScalarFieldEnum = {
+  id: 'id',
+  officialName: 'officialName',
+  commonName: 'commonName',
+  consoleId: 'consoleId',
+  description: 'description',
+  style: 'style',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GameScalarFieldEnum = (typeof GameScalarFieldEnum)[keyof typeof GameScalarFieldEnum]
+
+
+export const GameGenreScalarFieldEnum = {
+  gameId: 'gameId',
+  genreId: 'genreId'
+} as const
+
+export type GameGenreScalarFieldEnum = (typeof GameGenreScalarFieldEnum)[keyof typeof GameGenreScalarFieldEnum]
+
+
+export const GameReleaseScalarFieldEnum = {
+  id: 'id',
+  gameId: 'gameId',
+  releaseDate: 'releaseDate',
+  regionId: 'regionId',
+  regionCodeId: 'regionCodeId',
+  regionalStandard: 'regionalStandard',
+  edition: 'edition',
+  serialNumber: 'serialNumber',
+  barcode: 'barcode',
+  boxType: 'boxType',
+  description: 'description',
+  minLocalPlayers: 'minLocalPlayers',
+  maxLocalPlayers: 'maxLocalPlayers',
+  minOnlinePlayers: 'minOnlinePlayers',
+  maxOnlinePlayers: 'maxOnlinePlayers',
+  hasCoop: 'hasCoop',
+  mediaType: 'mediaType',
+  mediaCount: 'mediaCount',
+  supportsVibration: 'supportsVibration',
+  ageRating: 'ageRating',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GameReleaseScalarFieldEnum = (typeof GameReleaseScalarFieldEnum)[keyof typeof GameReleaseScalarFieldEnum]
+
+
+export const ReleaseDiscScalarFieldEnum = {
+  id: 'id',
+  releaseId: 'releaseId',
+  discNumber: 'discNumber',
+  label: 'label',
+  serialNumber: 'serialNumber',
+  mediaType: 'mediaType'
+} as const
+
+export type ReleaseDiscScalarFieldEnum = (typeof ReleaseDiscScalarFieldEnum)[keyof typeof ReleaseDiscScalarFieldEnum]
+
+
+export const ReleaseAccessoryScalarFieldEnum = {
+  releaseId: 'releaseId',
+  accessoryId: 'accessoryId',
+  type: 'type'
+} as const
+
+export type ReleaseAccessoryScalarFieldEnum = (typeof ReleaseAccessoryScalarFieldEnum)[keyof typeof ReleaseAccessoryScalarFieldEnum]
+
+
+export const GameDeveloperScalarFieldEnum = {
+  gameId: 'gameId',
+  companyId: 'companyId'
+} as const
+
+export type GameDeveloperScalarFieldEnum = (typeof GameDeveloperScalarFieldEnum)[keyof typeof GameDeveloperScalarFieldEnum]
+
+
+export const GamePublisherScalarFieldEnum = {
+  gameId: 'gameId',
+  companyId: 'companyId'
+} as const
+
+export type GamePublisherScalarFieldEnum = (typeof GamePublisherScalarFieldEnum)[keyof typeof GamePublisherScalarFieldEnum]
+
+
+export const ReleaseLanguageScalarFieldEnum = {
+  releaseId: 'releaseId',
+  languageId: 'languageId',
+  type: 'type'
+} as const
+
+export type ReleaseLanguageScalarFieldEnum = (typeof ReleaseLanguageScalarFieldEnum)[keyof typeof ReleaseLanguageScalarFieldEnum]
+
+
+export const GenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GenreScalarFieldEnum = (typeof GenreScalarFieldEnum)[keyof typeof GenreScalarFieldEnum]
+
+
+export const LanguageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  flag: 'flag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
+
+
+export const RegionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
+
+
+export const RegionCodeScalarFieldEnum = {
+  id: 'id',
+  consoleId: 'consoleId',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RegionCodeScalarFieldEnum = (typeof RegionCodeScalarFieldEnum)[keyof typeof RegionCodeScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -105,6 +320,111 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const AccessoryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  consoleId: 'consoleId',
+  type: 'type'
+} as const
+
+export type AccessoryOrderByRelevanceFieldEnum = (typeof AccessoryOrderByRelevanceFieldEnum)[keyof typeof AccessoryOrderByRelevanceFieldEnum]
+
+
+export const CompanyOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  wikipediaUrl: 'wikipediaUrl'
+} as const
+
+export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
+
+
+export const ConsoleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type ConsoleOrderByRelevanceFieldEnum = (typeof ConsoleOrderByRelevanceFieldEnum)[keyof typeof ConsoleOrderByRelevanceFieldEnum]
+
+
+export const ConsoleModelOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  serialNumber: 'serialNumber',
+  consoleId: 'consoleId',
+  gameMedia: 'gameMedia',
+  processor: 'processor',
+  ram: 'ram',
+  storage: 'storage',
+  backwardCompatibility: 'backwardCompatibility',
+  availableColors: 'availableColors'
+} as const
+
+export type ConsoleModelOrderByRelevanceFieldEnum = (typeof ConsoleModelOrderByRelevanceFieldEnum)[keyof typeof ConsoleModelOrderByRelevanceFieldEnum]
+
+
+export const GameOrderByRelevanceFieldEnum = {
+  officialName: 'officialName',
+  commonName: 'commonName',
+  consoleId: 'consoleId',
+  description: 'description'
+} as const
+
+export type GameOrderByRelevanceFieldEnum = (typeof GameOrderByRelevanceFieldEnum)[keyof typeof GameOrderByRelevanceFieldEnum]
+
+
+export const GameReleaseOrderByRelevanceFieldEnum = {
+  serialNumber: 'serialNumber',
+  barcode: 'barcode',
+  boxType: 'boxType',
+  description: 'description'
+} as const
+
+export type GameReleaseOrderByRelevanceFieldEnum = (typeof GameReleaseOrderByRelevanceFieldEnum)[keyof typeof GameReleaseOrderByRelevanceFieldEnum]
+
+
+export const ReleaseDiscOrderByRelevanceFieldEnum = {
+  label: 'label',
+  serialNumber: 'serialNumber'
+} as const
+
+export type ReleaseDiscOrderByRelevanceFieldEnum = (typeof ReleaseDiscOrderByRelevanceFieldEnum)[keyof typeof ReleaseDiscOrderByRelevanceFieldEnum]
+
+
+export const GenreOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+} as const
+
+export type GenreOrderByRelevanceFieldEnum = (typeof GenreOrderByRelevanceFieldEnum)[keyof typeof GenreOrderByRelevanceFieldEnum]
+
+
+export const LanguageOrderByRelevanceFieldEnum = {
+  name: 'name',
+  code: 'code',
+  flag: 'flag'
+} as const
+
+export type LanguageOrderByRelevanceFieldEnum = (typeof LanguageOrderByRelevanceFieldEnum)[keyof typeof LanguageOrderByRelevanceFieldEnum]
+
+
+export const RegionOrderByRelevanceFieldEnum = {
+  code: 'code',
+  name: 'name'
+} as const
+
+export type RegionOrderByRelevanceFieldEnum = (typeof RegionOrderByRelevanceFieldEnum)[keyof typeof RegionOrderByRelevanceFieldEnum]
+
+
+export const RegionCodeOrderByRelevanceFieldEnum = {
+  consoleId: 'consoleId',
+  code: 'code'
+} as const
+
+export type RegionCodeOrderByRelevanceFieldEnum = (typeof RegionCodeOrderByRelevanceFieldEnum)[keyof typeof RegionCodeOrderByRelevanceFieldEnum]
 
 
 export const UserOrderByRelevanceFieldEnum = {

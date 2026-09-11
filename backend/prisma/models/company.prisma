@@ -1,0 +1,19 @@
+// =====================================================
+// COMPANY
+// =====================================================
+
+model Company {
+  id           Int     @id @default(autoincrement())
+  name         String
+  description  String? @db.Text
+  wikipediaUrl String?
+
+  developers GameDeveloper[]
+  publishers GamePublisher[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@map("companies")
+}

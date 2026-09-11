@@ -29,8 +29,8 @@ export * from "./enums.js"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Accessories
+ * const accessories = await prisma.accessory.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -39,6 +39,86 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
+/**
+ * Model Accessory
+ * 
+ */
+export type Accessory = Prisma.AccessoryModel
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel
+/**
+ * Model Console
+ * 
+ */
+export type Console = Prisma.ConsoleModel
+/**
+ * Model ConsoleModel
+ * 
+ */
+export type ConsoleModel = Prisma.ConsoleModelModel
+/**
+ * Model Game
+ * 
+ */
+export type Game = Prisma.GameModel
+/**
+ * Model GameGenre
+ * 
+ */
+export type GameGenre = Prisma.GameGenreModel
+/**
+ * Model GameRelease
+ * 
+ */
+export type GameRelease = Prisma.GameReleaseModel
+/**
+ * Model ReleaseDisc
+ * 
+ */
+export type ReleaseDisc = Prisma.ReleaseDiscModel
+/**
+ * Model ReleaseAccessory
+ * 
+ */
+export type ReleaseAccessory = Prisma.ReleaseAccessoryModel
+/**
+ * Model GameDeveloper
+ * 
+ */
+export type GameDeveloper = Prisma.GameDeveloperModel
+/**
+ * Model GamePublisher
+ * 
+ */
+export type GamePublisher = Prisma.GamePublisherModel
+/**
+ * Model ReleaseLanguage
+ * 
+ */
+export type ReleaseLanguage = Prisma.ReleaseLanguageModel
+/**
+ * Model Genre
+ * 
+ */
+export type Genre = Prisma.GenreModel
+/**
+ * Model Language
+ * 
+ */
+export type Language = Prisma.LanguageModel
+/**
+ * Model Region
+ * 
+ */
+export type Region = Prisma.RegionModel
+/**
+ * Model RegionCode
+ * 
+ */
+export type RegionCode = Prisma.RegionCodeModel
 /**
  * Model User
  * 
