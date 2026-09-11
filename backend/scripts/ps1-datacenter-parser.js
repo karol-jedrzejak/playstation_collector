@@ -2,6 +2,24 @@ const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 
+
+/* import 'dotenv/config';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaClient } from '../generated/prisma/client';
+
+const adapter = new PrismaMariaDb({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  connectionLimit: 5,
+  allowPublicKeyRetrieval: true,
+});
+
+const prisma = new PrismaClient({ adapter });
+
+ */
 /* --------------------------------- */
 /* ----------- GET FILES ----------- */
 /* --------------------------------- */
@@ -614,6 +632,14 @@ const files = getHtmlFiles(inputPath);
 
 for (const filePath of files) {
   const data = getData(filePath);
+
+/*   // Testowe zapodanie do bazy danych
+  await prisma.game.create({
+    data: {
+      name: data.info.commonTitle,
+    },
+  });
+ */
   console.log(`${filePath}: ${JSON.stringify(data.info.commonTitle)}`);
   console.log(JSON.stringify(data, null, 2));
 }
