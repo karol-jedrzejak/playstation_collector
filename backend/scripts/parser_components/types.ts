@@ -1,4 +1,12 @@
+import { RegionalStandard } from '../../generated/prisma/client';
+
 export type RegionKey = 'ntscJ' | 'ntscU' | 'pal';
+
+export const regionalStandardMap: Record<RegionKey, RegionalStandard> = {
+  ntscJ: RegionalStandard.NTSC_J,
+  ntscU: RegionalStandard.NTSC_U,
+  pal: RegionalStandard.PAL,
+};
 
 export interface Disc {
   discNumber: string | null;
@@ -41,6 +49,13 @@ export interface Cover {
   images: CoverImage[];
 }
 
+export interface BarcodeNumber {
+  value: string | null;
+  flag: string | null;
+};
+
+
+
 export interface GameInfo {
   info: {
     officialTitle: string | null;
@@ -52,11 +67,7 @@ export interface GameInfo {
     publisher: string | null;
     releaseDate: string | null;
 
-    barcodeNumbers: {
-      prevCellText: string;
-      value: string | null;
-      flag: string | null;
-    };
+    barcodeNumbers: BarcodeNumber[];
 
     languages: Language[];
     languageText: string | null;

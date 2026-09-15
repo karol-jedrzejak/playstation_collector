@@ -12,7 +12,8 @@ import type {
   DescriptionText,
   Language,
   Disc,
-  RegionKey
+  RegionKey,
+  BarcodeNumber
 } from './types';
 
 import { cleanHtml } from './cleanHtml';
@@ -38,11 +39,7 @@ export function getData(filePath: string): GameInfo {
       publisher: null,
       releaseDate: null,
 
-      barcodeNumbers: {
-        prevCellText: 'Barcode Number(s)',
-        value: null,
-        flag: null,
-      },
+      barcodeNumbers: [],
 
       languages: [],
       languageText: null,
@@ -124,32 +121,45 @@ export function getData(filePath: string): GameInfo {
   /* --------------------------------- */
 
   $('#table7 td').each((_, cell) => {
-    const text = $(cell).text().trim();
+  const text = $(cell).text().trim();
 
-    if (text.includes('Barcode Number(s)')) {
-      const targetCell = $(cell).next('td');
+  if (text.includes('Barcode Number(s)')) {
+    const targetCell = $(cell).next('td');
 
-      if (targetCell.text().includes('From the back cover.')) {
-        const [start, end] = targetCell
+    if (targetCell.text().includes('From the back cover.')) {
+      const barcodeNumbers: BarcodeNumber[] = [];
+
+      targetCell.find('ul li').each((_, li) => {
+        const $li = $(li);
+
+        const barcode = $li
+          .clone()
+          .find('img')
+          .remove()
+          .end()
           .text()
-          .trim()
-          .split('\n')
-          .map((x) => x.trim());
+          .trim();
 
-        gameInfo.info.barcodeNumbers.value =
-          end.replace(/\s*-\s*$/, '');
+        if (!barcode) return;
 
-        const flagLink = targetCell.find('img').attr('src');
+        const flagLink = $li.find('img').attr('src');
 
-        gameInfo.info.barcodeNumbers.flag = flagLink
-          ? flagLink
-              .split('/')
-              .pop()!
-              .replace(/\.[^.]+$/, '')
-          : null;
-      }
+        barcodeNumbers.push({
+          value: barcode.replace(/\s*-\s*$/, ''),
+          flag: flagLink
+            ? flagLink
+                .split('/')
+                .pop()!
+                .replace(/\.[^.]+$/, '')
+            : null,
+        });
+      });
+
+      gameInfo.info.barcodeNumbers = barcodeNumbers;
     }
-  });
+  }
+});
+
 
   /* --------------------------------- */
   /* -----------DISCS----------------- */
@@ -415,83 +425,89 @@ export function getData(filePath: string): GameInfo {
   /* -----------OTHER REGIONS--------- */
   /* --------------------------------- */
 
-  const regionMap: Record<string, RegionKey> = {
-    'NTSC-J': 'ntscJ',
-    'NTSC-U': 'ntscU',
-    PAL: 'pal',
-  };
+const regionMap: Record<string, RegionKey> = {
+  'NTSC-J': 'ntscJ',
+  'NTSC-U': 'ntscU',
+  PAL: 'pal',
+};
 
-  let currentRegion: RegionKey | null = null;
+let currentRegion: RegionKey | null = null;
 
-  $('#table32 > tbody > tr > td')
-    .first()
-    .children()
-    .each((_, element) => {
-      const $element = $(element);
+$('#table32 > tbody > tr > td')
+  .first()
+  .children()
+  .each((_, element) => {
+    const $element = $(element);
 
-      if ($element.is('font')) {
-        const regionText = $element
-          .text()
-          .replace(/\s+/g, ' ')
-          .replace(':', '')
-          .trim();
+    // Region, np. NTSC-U:, PAL:, NTSC-J:
+    if ($element.is('font')) {
+      const regionText = $element
+        .text()
+        .replace(/\s+/g, ' ')
+        .replace(':', '')
+        .trim();
 
-        for (const [regionName, field] of Object.entries(
-          regionMap,
-        )) {
-          if (regionText.includes(regionName)) {
-            currentRegion = field;
-            break;
-          }
-        }
+      currentRegion =
+        Object.entries(regionMap).find(([regionName]) =>
+          regionText.includes(regionName),
+        )?.[1] ?? null;
 
-        return;
-      }
+      return;
+    }
 
-      if ($element.is('ul') && currentRegion) {
-        $element.find('li').each((_, li) => {
-          const $li = $(li);
+    // Lista release'ów dla aktualnego regionu
+    if (!$element.is('ul') || !currentRegion) {
+      return;
+    }
 
-          const text = $li
-            .clone()
-            .find('img')
-            .remove()
-            .end()
-            .text()
-            .replace(/\u00a0/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim();
+    // TS wie tutaj, że region nie jest null
+    const region = currentRegion;
 
-          const codeMatch = text.match(/\[([^\]]+)\]/);
+    $element.find('li').each((_, li) => {
+      const $li = $(li);
 
-          const code = codeMatch
-            ? codeMatch[1].trim()
-            : null;
+      // Pobieramy tekst bez obrazka flagi
+      const text = $li
+        .clone()
+        .find('img')
+        .remove()
+        .end()
+        .text()
+        .replace(/\u00a0/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-          const name = text
-            .replace(/\s*\[[^\]]+\]\s*$/, '')
-            .trim();
+      // Wyciągamy kod, np. [SLUS-01485]
+      const codeMatch = text.match(/\[([^\]]+)\]/);
 
-          const flagSrc = $li.find('img').attr('src') || '';
+      const code = codeMatch?.[1].trim() ?? null;
 
-          const flag = flagSrc
-            ? flagSrc
-                .split('/')
-                .pop()!
-                .replace(/\.[^.]+$/, '')
-            : null;
+      // Usuwamy kod [SLUS-01485] oraz końcowy "-"
+      let name = text
+        .replace(/\s*\[[^\]]+\]\s*/, ' ')
+        .replace(/\s*-\s*$/, '')
+        .trim();
 
-        if(currentRegion){
-            gameInfo.regionsReleased[currentRegion].push({
-                name,
-                code,
-                flag,
-            });
-            }
-        });
-      }
+      name = name
+        .replace(/\s*\[[^\]]+\]\s*/, ' ')
+        .replace(/\s*-\s*$/, '')
+        .trim();
+
+      // Pobieramy flagę
+      const flagSrc = $li.find('img').attr('src');
+
+      const flag = flagSrc
+        ? flagSrc.split('/').pop()?.replace(/\.[^.]+$/, '') ?? null
+        : null;
+
+      gameInfo.regionsReleased[region].push({
+        name,
+        code,
+        flag,
+      });
     });
-
+  });
+  
   /* --------------------------------- */
   /* -----------COVERS---------------- */
   /* --------------------------------- */

@@ -7,10 +7,17 @@
     "build:windows": "if not exist .env copy .env.example .env && docker compose up --build",
     "build:other": "([ -f .env ] || cp .env.example .env) && docker compose up --build",
     "setup": "docker exec -it playstation-backend npx prisma migrate reset && docker exec -it playstation-backend npx prisma migrate dev --name init",
+    
     "backend": "docker exec -it playstation-backend",
     "frontend": "docker exec -it playstation-frontend",
+
     "prisma:generate": "docker exec -it playstation-backend npx prisma generate",
     "prisma:migrate": "docker exec -it playstation-backend npx prisma migrate dev",
-    "prisma:db-push": "docker exec -it playstation-backend npx prisma db push"
+    "prisma:db-push": "docker exec -it playstation-backend npx prisma db push",
+    "prisma:db-seed": "docker exec -it playstation-backend npx prisma db seed",
+    "prisma:reset": "docker exec -it playstation-backend npx prisma migrate reset && docker exec -it playstation-backend npx prisma migrate dev && docker exec -it playstation-backend npx prisma generate && docker exec -it playstation-backend npx prisma db seed",
+    
+    "download": "python backend/scripts/dumps/downloader.py",
+    "parser": "npm run backend npx tsx scripts/parser.ts"
   }
 }

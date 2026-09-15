@@ -32,29 +32,60 @@ async function main(): Promise<void> {
 
   const files = getHtmlFiles(inputPath);
 
-  for (const filePath of files) {
+  let separator = false;
+
+  for (const [index, filePath] of files.entries()) {
+
     /* Wczytanie pliku */
     const data = getData(filePath);
+
+    /* Stylizacja */
+    if(separator)
+    {
+      console.log("")
+      console.log("----------------------------------------------------------")
+      const current = String(index + 1).padStart(5, '0');
+      const total = String(files.length).padStart(5, '0');
+      console.log(`Plik [${current}/${total}] - ${filePath}`);
+    }
+
+    console.log(`${filePath}`);
+    //console.log(data.regionsReleased);
+
+
+
+    if(data.regionsReleased)
+    {
+      const ukRelease = data.regionsReleased?.pal?.find(
+        (release) => release.flag === 'uk',
+      );
+
+      const usaRelease = data.regionsReleased?.ntscU?.find(
+  (release) => release.flag === 'usa',
+)
+
+      console.log(`ukRelease: ${ukRelease?.name}`);
+      console.log(`usaRelease: ${usaRelease?.name}`);
+    }
+
 
     /* Dodanie developera & publishera do bazy */
     //await saveCompany(data);
 
     /* Dodanie gatunku do bazy */
-    await saveGenre(data);
-
-
-
-
-    //console.log(`${filePath}: ${JSON.stringify(data.info.genreStyle)}`,);
-
-
+    //await saveGenre(data);
 
     /* Dodanie gry do bazy */
     //await saveGame(data);
 
-    //console.log(`${filePath}: ${JSON.stringify(data.info.commonTitle)}`,);
 
-    //console.log(JSON.stringify(data, null, 2));
+
+    /* Stylizacja */
+    if(separator)
+    {
+      console.log("----------------------------------------------------------")
+    }
+
   }
 
   console.log(`\nPrzetworzono: ${files.length} plików`);

@@ -12,13 +12,95 @@ import type {
   RegionKey
 } from './types';
 
+import { RegionalStandard } from '../../generated/prisma/client';
+
+import { normalizeCompanyName } from "./saveCompany";
 
 export async function saveGame(data: GameInfo): Promise<void> {
+
+    let developers = data.info.developer?.split("/").map(normalizeCompanyName).filter(Boolean);
+    let publishers = data.info.publisher?.split("/").map(normalizeCompanyName).filter(Boolean);
+    let genres = data.info.genreStyle?.split("/").map((genre) => genre.trim()).filter(Boolean);
+
+    function parseRegionalStandard( value?: string | null, ): RegionalStandard | undefined { if (!value) return undefined; return Object.values(RegionalStandard).includes( value as RegionalStandard, ) ? (value as RegionalStandard) : undefined; }
+
+    const ukRelease = data.regionsReleased?.pal?.find(
+      (release) => release.flag === 'uk',
+    );
+    const usaRelease = data.regionsReleased?.ntscU?.find(
+      (release) => release.flag === 'usa',
+    );
+
+    if (data.info.commonTitle && data.info.officialTitle)
+    {
+      const existingGame = await prisma.game.findFirst({
+        where: {
+          OR: [
+            { officialName: data.info.commonTitle },
+            { officialName: data.info.officialTitle },
+            { officialName: ukRelease?.name },
+            { officialName: usaRelease?.name },
+            { commonName: data.info.commonTitle },
+            { commonName: data.info.officialTitle },
+            { commonName: ukRelease?.name },
+            { commonName: usaRelease?.name },
+          ],
+        },
+        include: {
+          releases: true,
+        },
+      });
+
+      if(existingGame)
+      {
+        // add relese
+      } else{
+        //if uk relese avabile
+
+
+      };
+
+    }
+
+    
 
     const game = await prisma.game.create({
     data: {
       officialName: data.info.officialTitle ?? data.info.commonTitle ?? '',
       commonName: data.info.commonTitle,
+
+
+      developers: {
+        create: developers?.map((name) => ({
+          company: {
+            connect: {
+              name,
+            },
+          },
+        })),
+      },
+
+
+      publishers: {
+        create: publishers?.map((name) => ({
+          company: {
+            connect: {
+              name,
+            },
+          },
+        })),
+      },
+
+      
+      genres: {
+        create: genres?.map((name) => ({
+          genre: {
+            connect: {
+              name,
+            },
+          },
+        })),
+      },
 
       /*
        * Opis z parsera jest tablicą bloków.
@@ -70,8 +152,6 @@ export async function saveGame(data: GameInfo): Promise<void> {
 
           serialNumber: data.info.serialNumber,
 
-          barcode: data.info.barcodeNumbers.value,
-
           mediaType: 'CD',
 
           mediaCount:
@@ -120,6 +200,10 @@ export async function saveGame(data: GameInfo): Promise<void> {
               }
             : undefined,
 
+
+          regionalStandard: parseRegionalStandard(data.info.region),
+
+
           supportsVibration:
             data.features.vibrationFunctionCompatible
               ? data.features.vibrationFunctionCompatible
@@ -157,7 +241,7 @@ export async function saveGame(data: GameInfo): Promise<void> {
    * Zapisujemy dane, które bezpośrednio odpowiadają
    * obecnemu modelowi Game.
    */
-  console.log(`Dodano do bazy: ${game.id}`);
+  console.log(`Dodano do bazy: ${game.commonName}`);
  
 }
 

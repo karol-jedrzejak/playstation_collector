@@ -4,7 +4,7 @@
 
 model Company {
   id           Int     @id @default(autoincrement())
-  name         String
+  name         String  @unique
   description  String? @db.Text
   wikipediaUrl String?
 

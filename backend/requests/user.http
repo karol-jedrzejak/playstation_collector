@@ -1,0 +1,77 @@
+### Zmienne środowiskowe dla testów
+@baseUrl = http://localhost:3001
+@contentType = application/json
+
+### 1. Rejestracja nowego użytkownika
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "username": "jan_kowalski",
+  "email": "jan.kowalski@example.com",
+  "password": "Password123!"
+}
+
+### Zapisanie tokenu JWT z odpowiedzi rejestracji lub logowania
+@authToken = {{register.response.body.accessToken}}
+
+
+### 2. Logowanie użytkownika
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "emailOrUsername": "jan_kowalski",
+  "password": "Password123!"
+}
+
+### Pobranie tokenu z nazwy zapytania # @name login
+@authToken = {{login.response.body.accessToken}}
+
+
+### 3. Zmiana nazwy użytkownika (wymaga auth)
+PATCH {{baseUrl}}/users/profile
+Authorization: Bearer {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "username": "jan_kowalski_v2"
+}
+
+
+### 4. Zmiana hasła (wymaga auth)
+POST {{baseUrl}}/auth/change-password
+Authorization: Bearer {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NewPassword123!"
+}
+
+### 4A. Zmiana hasła na poprzednie (wymaga auth)
+POST {{baseUrl}}/auth/change-password
+Authorization: Bearer {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "oldPassword": "NewPassword123!",
+  "newPassword": "Password123!"
+}
+
+
+### 5. Wylogowanie użytkownika (wymaga auth)
+# @name logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{authToken}}
+
+
+### 6. Testowy endpoint publiczny (Otwarty dla wszystkich)
+GET {{baseUrl}}/users/public
+
+
+### 7. Testowy endpoint chroniony (Wymaga aktywnego tokenu JWT)
+GET {{baseUrl}}/users/protected
+Authorization: Bearer {{authToken}}

@@ -242,17 +242,17 @@ export type CompanyOrderByWithRelationInput = {
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
   AND?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
-  name?: Prisma.StringFilter<"Company"> | string
   description?: Prisma.StringNullableFilter<"Company"> | string | null
   wikipediaUrl?: Prisma.StringNullableFilter<"Company"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   developers?: Prisma.GameDeveloperListRelationFilter
   publishers?: Prisma.GamePublisherListRelationFilter
-}, "id">
+}, "id" | "name">
 
 export type CompanyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
