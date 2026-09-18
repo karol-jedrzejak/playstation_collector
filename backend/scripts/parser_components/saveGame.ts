@@ -53,10 +53,21 @@ export async function saveGame(data: GameInfo): Promise<void> {
 
       if(existingGame)
       {
-        // add relese
+        // add relese to existing game
       } else{
-        //if uk relese avabile
+        
+        if("uk" == "uk") //if uk or usa relese avabile
+        {
+          // add uk or usa game
+          // add as relese
 
+        } else{
+          // if no uka usa game
+
+          // add game with release
+
+
+        };
 
       };
 
